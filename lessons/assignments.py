@@ -10,6 +10,8 @@ def main():
         c5()
     elif number == "6":
         c6()
+    elif number == "7":
+        c7()
     else:
         print("No assignments of that number found.")
 
@@ -131,12 +133,39 @@ def c5():
 def c6():
     print("Chapter 6: Strings\n")
     text = "X-DSPAM-Confidence:    0.8475"
-    print("Uses string methods find() and slice() to extract number from the following text:\n",text)
+    print("Uses string methods find() and slice()\nto extract number from the following text:")
+    print(text, "\n")
     input("Press enter to continue...\n")
     start = text.find(":")
     str = text[slice(start + 1, len(text))]
     stripped = str.strip()
     num = float(stripped)
     print(num)
+
+def c7():
+    print("Chapter 7: Files\n")
+    print("When prompted, input name of file within current directory.\nFunction finds each line that begins with \"X-DSPAM-Confidence\"\nThen, the function returns the average of all these values.\n")
+    input("Press enter to continue...\n")
+    fname = input("Enter file name: ")
+    try:
+        fh = open(fname)
+    except:
+        print("Could not open file.")
+        quit()
+    total = 0
+    count = 0
+    for line in fh:
+        if not line.startswith("X-DSPAM-Confidence:"):
+            continue
+        else:
+            idx = line.find(":")
+            x = slice(idx + 1, len(line))
+            num = line[x].strip()
+            n = float(num)
+            total += n
+            count += 1
+    avg = total / count
+    print("Average spam confidence:", avg)
+
 
 main()
