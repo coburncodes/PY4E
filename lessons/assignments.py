@@ -133,9 +133,10 @@ def c6():
     text = "X-DSPAM-Confidence:    0.8475"
     print("Uses string methods find() and slice() to extract number from the following text:\n",text)
     input("Press enter to continue...\n")
-    start = text.find("0")
-    str = text[slice(start, len(text))]
-    num = float(str)
+    start = text.find(":")
+    str = text[slice(start + 1, len(text))]
+    stripped = str.strip()
+    num = float(stripped)
     print(num)
 
 main()
