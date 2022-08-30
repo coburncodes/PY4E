@@ -8,6 +8,8 @@ def main():
         c4()
     elif number == "5":
         c5()
+    elif number == "6":
+        c6()
     else:
         print("No assignments of that number found.")
 
@@ -82,16 +84,6 @@ def x3_3():
         else:
             print("F")
 
-def computepay(h, r):
-    if h <= 40:
-        value = h * r
-    else:
-        ot_hrs = float(h % 40)
-        ot_pay = ot_hrs * r * 1.5
-        reg_pay = 40 * r
-        value = reg_pay + ot_pay
-    return value
-
 def c4():
     print("Chapter 4: Functions\n")
     input("When prompted, input hours and rate to calculate pay.\nThis calculation will include overtime at time and a half.\nPress enter to continue...\n")
@@ -101,6 +93,16 @@ def c4():
     r = float(rate)
     p = computepay(h, r)
     print("Pay", p)
+
+def computepay(h, r):
+    if h <= 40:
+        value = h * r
+    else:
+        ot_hrs = float(h % 40)
+        ot_pay = ot_hrs * r * 1.5
+        reg_pay = 40 * r
+        value = reg_pay + ot_pay
+    return value
 
 def c5():
     print("Chapter 5: Loops and Iterations\n")
@@ -126,5 +128,14 @@ def c5():
     print("Maximum is", largest)
     print("Minimum is", smallest)
 
+def c6():
+    print("Chapter 6: Strings\n")
+    text = "X-DSPAM-Confidence:    0.8475"
+    print("Uses string methods find() and slice() to extract number from the following text:\n",text)
+    input("Press enter to continue...\n")
+    start = text.find("0")
+    str = text[slice(start, len(text))]
+    num = float(str)
+    print(num)
 
 main()
