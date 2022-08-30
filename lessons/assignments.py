@@ -5,6 +5,8 @@ def main():
             c2()
         elif number == "3":
             c3()
+        elif number == "4":
+            c4()
         else:
             print("No assignments of that number found.")
         break
@@ -86,5 +88,26 @@ def x3_3():
                 print("F")
         break
 
+# Chapter 4 helper function
+def computepay(h, r):
+    if h <= 40:
+        value = h * r
+    else:
+        ot_hrs = float(h % 40)
+        ot_pay = ot_hrs * r * 1.5
+        reg_pay = 40 * r
+        value = reg_pay + ot_pay
+    return value
+
+# Chapter 4 function
+def c4():
+    hrs = input("Enter Hours:")
+    h = float(hrs)
+
+    rate = input("Enter Rate:")
+    r = float(rate)
+    p = computepay(h, r)
+
+    print("Pay", p)
 
 main()
