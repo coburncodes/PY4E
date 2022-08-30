@@ -7,6 +7,8 @@ def main():
             c3()
         elif number == "4":
             c4()
+        elif number == "5":
+            c5()
         else:
             print("No assignments of that number found.")
         break
@@ -109,5 +111,32 @@ def c4():
     p = computepay(h, r)
 
     print("Pay", p)
+
+# Chapter 5 function
+def c5():
+    largest = None
+    smallest = None
+
+    while True:
+        num = input("Enter a number: ")
+        
+        if num == "done":
+            break
+        try:
+            n = int(num)
+        except:
+            print("Invalid input")
+            
+        if largest == None:
+            largest = n
+        if smallest == None:
+            smallest = n
+        if n > largest:
+            largest = n
+        elif n < smallest:
+            smallest = n
+
+    print("Maximum is", largest)
+    print("Minimum is", smallest)
 
 main()
