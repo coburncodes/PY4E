@@ -12,6 +12,8 @@ def main():
         c6()
     elif number == "7":
         c7()
+    elif number == "8":
+        c8()
     else:
         print("No assignments of that number found.")
 
@@ -164,8 +166,59 @@ def c7():
             n = float(num)
             total += n
             count += 1
-    avg = total / count
+    try:
+        avg = total / count
+    except:
+        print("Operation failed. Try again.")
+        quit()
     print("Average spam confidence:", avg)
+
+def c8():
+    print("Chapter 8: Lists\n")
+    x = input("Select an exercise: 8.4 or 8.5\n")
+    if x == "8.4":
+        x8_4()
+    elif x == "8.5":
+        x8_5()
+    else:
+        print("Input either 8.4 or 8.5.")
+
+def x8_4():
+    print("When prompted, input name of file within current directory.\nFunction sorts each word in file.\n")
+    input("Press enter to continue...\n")
+    fname = input("Enter file name: ")
+    try:
+        fh = open(fname)
+    except:
+        print("File could not be opened")
+        quit()
+    lst = list()
+    for line in fh:
+        words = line.split()
+        for word in words:
+            if not word in lst:
+                lst.append(word)
+    lst.sort() 
+    print(lst)
+
+def x8_5():
+    print("When prompted, input name of file within current directory.\nFunction parses email addresses from each line.\n")
+    input("Press enter to continue...\n")
+    fname = input("Enter file name: ")
+    if len(fname) < 1:
+        fname = "mbox-short.txt"
+    try:
+        fh = open(fname)
+    except:
+        print("Could not open file")
+        quit()
+    count = 0
+    for line in fh:
+        if line.startswith("From "):
+            x = line.split()
+            print(x[1])
+            count += 1   
+    print("There were", count, "lines in the file with From as the first word")
 
 
 main()
