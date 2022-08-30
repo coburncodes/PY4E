@@ -12,7 +12,8 @@ def main():
         print("No assignments of that number found.")
 
 def c2():
-    x = input("Which Exercise? ")
+    print("Chapter 2: Variables, Expressions and Statements\n")
+    x = input("Select an exercise: 2.2 or 2.3?\n")
     if x == "2.2":
         x2_2()
     elif x == "2.3":
@@ -21,10 +22,12 @@ def c2():
         print("Input either 2.2 or 2.3.")
 
 def x2_2():
+    input("When prompted, input your name for a greeting in the terminal.\nPress enter to continue...\n")
     name = input("Enter your name\n")
-    print("Hello", name)
+    print("Hello,", name)
 
 def x2_3():
+    input("When prompted, input hours and rate to calculate pay.\nPress enter to continue...\n")
     hrs = input("Enter Hours: ")
     rate = input("Enter Rate: ")
     try:
@@ -36,7 +39,8 @@ def x2_3():
     print("Pay:", pay)
 
 def c3():
-    x = input("Which Exercies?\n")
+    print("Chapter 3: Conditional Execution\n")
+    x = input("Select an exercise: 3.1 or 3.3?\n")
     if x == "3.1":
         x3_1()
     elif x == "3.3":
@@ -45,6 +49,7 @@ def c3():
         print("Input either 3.1 or 3.3.")
 
 def x3_1():
+    input("When prompted, input hours and rate to calculate pay.\nThis calculation will include overtime at time and a half.\nPress enter to continue...\n")
     hrs = input("Enter Hours: ")
     h = float(hrs)
     rate = input("Enter Rate: ")
@@ -60,6 +65,7 @@ def x3_1():
     print(pay)
 
 def x3_3():
+    input("When prompted, input a decimal score between 0.0 and 1.0 for a grade.\nPress enter to continue...\n")
     score = input("Enter Score: ")
     s = float(score)
     if not s >= 0 or not s <= 1:
@@ -87,6 +93,8 @@ def computepay(h, r):
     return value
 
 def c4():
+    print("Chapter 4: Functions\n")
+    input("When prompted, input hours and rate to calculate pay.\nThis calculation will include overtime at time and a half.\nPress enter to continue...\n")
     hrs = input("Enter Hours: ")
     h = float(hrs)
     rate = input("Enter Rate: ")
@@ -95,6 +103,8 @@ def c4():
     print("Pay", p)
 
 def c5():
+    print("Chapter 5: Loops and Iterations\n")
+    input("When prompted, input a number. To stop, type \"done\".\nThe function will return the highest and lowest numbers.\nPress enter to continue...\n")
     largest = None
     smallest = None
     while True:
