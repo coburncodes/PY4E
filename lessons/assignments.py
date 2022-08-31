@@ -1,3 +1,5 @@
+import re
+
 def main():
     number = input("Chapter Number: ")
     if number == "2":
@@ -18,6 +20,8 @@ def main():
         c9()
     elif number == "10":
         c10()
+    elif number == "11":
+        c11()
     else:
         print("No assignments of that number found.")
 
@@ -269,7 +273,25 @@ def c10():
 
     for item in sorted_items:
         print(item[0], item[1])
-    
-    
+
+def c11():
+    print("Chapter 11: Regular Expressions\n")
+    print("Input file name when prompted.\nFunction returns sum of numbers within file.\n")
+    input("Press enter to continue...\n")
+    fname = input("Enter file name: ")
+    if len(fname) != 1:
+        fname = "regex_sum_1632431.txt"
+    handle = open(fname)
+    nums = []
+    total = 0
+    for line in handle:
+        if re.search("[0-9]+", line):
+            nums.append(re.findall("[0-9]+", line))
+
+    for item in nums:
+        for i in item:
+            total += int(i)
+    print(total)
+
 
 main()
