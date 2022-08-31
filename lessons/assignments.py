@@ -16,6 +16,8 @@ def main():
         c8()
     elif number == "9":
         c9()
+    elif number == "10":
+        c10()
     else:
         print("No assignments of that number found.")
 
@@ -245,6 +247,29 @@ def c9():
             winner = k
     print(winner, highest)
 
+def c10():
+    print("Chapter 10: Tuples\n")
+    print("Input file name when prompted.\nFunction returns distribution by hour of the day for each of the messages.\n")
+    input("Press enter to continue...\n")
+    name = input("Enter file:")
+    if len(name) < 1:
+        name = "mbox-short.txt"
+    handle = open(name)
+    hours = []
+    times = {}
+    for line in handle:
+        if line.startswith("From "):
+            # Append to "hours" the first two digits of the fifth indexed word on the line
+            hours.append((line.split()[5])[slice(2)])
 
+    for hour in hours:
+        times[hour] = times.get(hour, 0) + 1
+
+    sorted_items = sorted(times.items())
+
+    for item in sorted_items:
+        print(item[0], item[1])
+    
+    
 
 main()
