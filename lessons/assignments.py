@@ -14,6 +14,8 @@ def main():
         c7()
     elif number == "8":
         c8()
+    elif number == "9":
+        c9()
     else:
         print("No assignments of that number found.")
 
@@ -219,6 +221,30 @@ def x8_5():
             print(x[1])
             count += 1   
     print("There were", count, "lines in the file with From as the first word")
+
+def c9():
+    print("Chapter 9: Dictionaries\n")
+    print("Input file name when prompted.\nFunction returns the user who sent the most emails along with the number.\n")
+    input("Press enter to continue...\n")
+    name = input("Enter file:")
+    if len(name) < 1:
+        name = "mbox-short.txt"
+    handle = open(name)
+    emails = []
+    counts = {}
+    highest = 0
+    for line in handle:
+        if line.startswith("From "):
+            x = line.split()
+            emails.append(x[1])
+    for email in emails:
+        counts[email] = counts.get(email, 0) + 1
+    for k, v in counts.items():
+        if v > highest:
+            highest = v
+            winner = k
+    print(winner, highest)
+
 
 
 main()
