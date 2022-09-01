@@ -1,4 +1,7 @@
 import re
+import socket
+import urllib.request
+from bs4 import BeautifulSoup
 
 def main():
     number = input("Chapter Number: ")
@@ -22,6 +25,8 @@ def main():
         c10()
     elif number == "11":
         c11()
+    elif number == "12":
+        c12()
     else:
         print("No assignments of that number found.")
 
@@ -279,7 +284,7 @@ def c11():
     print("Input file name when prompted.\nFunction returns sum of numbers within file.\n")
     input("Press enter to continue...\n")
     fname = input("Enter file name: ")
-    if len(fname) != 1:
+    if len(fname) < 1:
         fname = "regex_sum_1632431.txt"
     handle = open(fname)
     nums = []
@@ -292,6 +297,74 @@ def c11():
         for i in item:
             total += int(i)
     print(total)
+
+def c12():
+    print("Chapter 12: Network Programming\n")
+    x = input("Select an exercise: 12.1, 12.2 or 12.3.\n")
+    if x == "12.1":
+        x12_1()
+    elif x == "12.2":
+        x12_2()
+    elif x == "12.3":
+        x12_3()
+    else:
+        print("Input either 12.1, 12.2 or 12.3.")
+
+def x12_1():
+    print("Input a webpage when prompted.\nDefault page: http://data.pr4e.org/intro-short.txt\nFunction retrieves data from webpage.\n")
+    input("Press enter to continue...\n")
+    page = input("Input a webpage. For default, press enter: ")
+    if len(page) < 1:
+        page = "http://data.pr4e.org/intro-short.txt"
+    mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    mysock.connect(("data.pr4e.org", 80))
+    unencoded = "GET " + page + " HTTP/1.0\r\n\r\n"
+    cmd = unencoded.encode()
+    mysock.send(cmd)
+    while True:
+        data = mysock.recv(512)
+        if len(data) < 1:
+            break
+        print(data.decode())
+    mysock.close()
+
+def x12_2():
+    print("Input a webpage when prompted.\nDefault page:\nhttp://py4e-data.dr-chuck.net/comments_1632433.html\nFunction sums numbers from webpage.\n")
+    input("Press enter to continue...\n") 
+    url = input("Input webpage. For default, press enter: ")
+    if len(url) < 1:
+        url = "http://py4e-data.dr-chuck.net/comments_1632433.html"
+    html = urllib.request.urlopen(url).read()
+    soup = BeautifulSoup(html, "html.parser")
+    tags = soup("span")
+    sum = 0
+    for tag in tags:
+        sum += int(tag.contents[0])
+    print(sum)
+
+def x12_3():
+    print("Input a webpage when prompted.\nDefault page:\nhttp://py4e-data.dr-chuck.net/known_by_Fikret.html\nFunction follows URL trail to retrieve name.\n")
+    input("Press enter to continue...\n") 
+    url = input("Input webpage. For default, press enter: ")
+    num = int(input("Input number of cycles: "))
+    pos = int(input("Input position: ")) - 1
+    names = []
+    if len(url) < 1:
+        url = "http://py4e-data.dr-chuck.net/known_by_Abdullah.html"
+    cycle(url, num, pos, names)
+    print(names[num - 1])
+
+def cycle(url, num, pos, names):
+    html = urllib.request.urlopen(url).read()
+    soup = BeautifulSoup(html, "html.parser")
+    tags = soup("a")
+    if num > 0:
+        url = (tags[pos].get("href", None))
+        num -= 1
+        names.append(tags[pos].contents[0])
+        cycle(url, num, pos, names)
+    return names
+
 
 
 main()
