@@ -4,6 +4,7 @@ import urllib.request, urllib.error, urllib.parse
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
 import json
+import ssl
 
 def main():
     number = input("Chapter Number: ")
@@ -53,12 +54,15 @@ def x2_3():
     input("When prompted, input hours and rate to calculate pay.\nPress enter to continue...\n")
     hrs = input("Enter Hours: ")
     rate = input("Enter Rate: ")
+    
     try:
         fhrs = float(hrs)
         frate = float(rate)
     except (ValueError):
         print("Input a number for both hours and rate")
+
     pay = fhrs * frate
+
     print("Pay:", pay)
 
 def c3():
@@ -85,12 +89,14 @@ def x3_1():
         reg_pay = 40 * r
         ot_pay = ot_hrs * r * 1.5
         pay = ot_pay + reg_pay
+
     print(pay)
 
 def x3_3():
     input("When prompted, input a decimal score between 0.0 and 1.0 for a grade.\nPress enter to continue...\n")
     score = input("Enter Score: ")
     s = float(score)
+
     if not s >= 0 or not s <= 1:
         print("Error")
     else:
@@ -123,21 +129,26 @@ def computepay(h, r):
         ot_pay = ot_hrs * r * 1.5
         reg_pay = 40 * r
         value = reg_pay + ot_pay
+
     return value
 
 def c5():
     print("Chapter 5: Loops and Iterations\n")
     input("When prompted, input a number. To stop, type \"done\".\nThe function will return the highest and lowest numbers.\nPress enter to continue...\n")
+
     largest = None
     smallest = None
+
     while True:
         num = input("Enter a number: ")
         if num == "done":
             break
+
         try:
             n = int(num)
         except:
             print("Invalid input")
+
         if largest == None:
             largest = n
         if smallest == None:
@@ -146,6 +157,7 @@ def c5():
             largest = n
         elif n < smallest:
             smallest = n
+
     print("Maximum is", largest)
     print("Minimum is", smallest)
 
@@ -155,10 +167,12 @@ def c6():
     print("Uses string methods find() and slice()\nto extract number from the following text:")
     print(text, "\n")
     input("Press enter to continue...\n")
+
     start = text.find(":")
     str = text[slice(start + 1, len(text))]
     stripped = str.strip()
     num = float(stripped)
+
     print(num)
 
 def c7():
@@ -166,11 +180,13 @@ def c7():
     print("When prompted, input name of file within current directory.\nFunction finds each line that begins with \"X-DSPAM-Confidence\"\nThen, the function returns the average of all these values.\n")
     input("Press enter to continue...\n")
     fname = input("Enter file name: ")
+
     try:
         fh = open(fname)
     except:
         print("Could not open file.")
         quit()
+
     total = 0
     count = 0
     for line in fh:
@@ -183,11 +199,13 @@ def c7():
             n = float(num)
             total += n
             count += 1
+
     try:
         avg = total / count
     except:
         print("Operation failed. Try again.")
         quit()
+
     print("Average spam confidence:", avg)
 
 def c8():
@@ -204,11 +222,13 @@ def x8_4():
     print("When prompted, input name of file within current directory.\nFunction sorts each word in file.\n")
     input("Press enter to continue...\n")
     fname = input("Enter file name: ")
+
     try:
         fh = open(fname)
     except:
         print("File could not be opened")
         quit()
+
     lst = list()
     for line in fh:
         words = line.split()
@@ -216,60 +236,74 @@ def x8_4():
             if not word in lst:
                 lst.append(word)
     lst.sort() 
+
     print(lst)
 
 def x8_5():
     print("When prompted, input name of file within current directory.\nFunction parses email addresses from each line.\n")
     input("Press enter to continue...\n")
+
     fname = input("Enter file name: ")
     if len(fname) < 1:
         fname = "mbox-short.txt"
+
     try:
         fh = open(fname)
     except:
         print("Could not open file")
         quit()
+
     count = 0
     for line in fh:
         if line.startswith("From "):
             x = line.split()
             print(x[1])
-            count += 1   
+            count += 1
+
     print("There were", count, "lines in the file with From as the first word")
 
 def c9():
     print("Chapter 9: Dictionaries\n")
     print("Input file name when prompted.\nFunction returns the user who sent the most emails along with the number.\n")
     input("Press enter to continue...\n")
+
     name = input("Enter file:")
     if len(name) < 1:
         name = "mbox-short.txt"
+
     handle = open(name)
     emails = []
     counts = {}
     highest = 0
+
     for line in handle:
         if line.startswith("From "):
             x = line.split()
             emails.append(x[1])
+
     for email in emails:
         counts[email] = counts.get(email, 0) + 1
+
     for k, v in counts.items():
         if v > highest:
             highest = v
             winner = k
+
     print(winner, highest)
 
 def c10():
     print("Chapter 10: Tuples\n")
     print("Input file name when prompted.\nFunction returns distribution by hour of the day for each of the messages.\n")
     input("Press enter to continue...\n")
+
     name = input("Enter file:")
     if len(name) < 1:
         name = "mbox-short.txt"
+
     handle = open(name)
     hours = []
     times = {}
+
     for line in handle:
         if line.startswith("From "):
             # Append to "hours" the first two digits of the fifth indexed word on the line
@@ -287,12 +321,15 @@ def c11():
     print("Chapter 11: Regular Expressions\n")
     print("Input file name when prompted.\nFunction returns sum of numbers within file.\n")
     input("Press enter to continue...\n")
+
     fname = input("Enter file name: ")
     if len(fname) < 1:
         fname = "regex_sum_1632431.txt"
+
     handle = open(fname)
     nums = []
     total = 0
+
     for line in handle:
         if re.search("[0-9]+", line):
             nums.append(re.findall("[0-9]+", line))
@@ -300,6 +337,7 @@ def c11():
     for item in nums:
         for i in item:
             total += int(i)
+
     print(total)
 
 def c12():
@@ -317,44 +355,55 @@ def c12():
 def x12_1():
     print("Input a webpage when prompted.\nDefault page: http://data.pr4e.org/intro-short.txt\nFunction retrieves data from webpage.\n")
     input("Press enter to continue...\n")
+
     page = input("Input a webpage. For default, press enter: ")
     if len(page) < 1:
         page = "http://data.pr4e.org/intro-short.txt"
+
     mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     mysock.connect(("data.pr4e.org", 80))
     unencoded = "GET " + page + " HTTP/1.0\r\n\r\n"
     cmd = unencoded.encode()
     mysock.send(cmd)
+
     while True:
         data = mysock.recv(512)
         if len(data) < 1:
             break
         print(data.decode())
+
     mysock.close()
 
 def x12_2():
     print("Input a webpage when prompted.\nDefault page:\nhttp://py4e-data.dr-chuck.net/comments_1632433.html\nFunction sums numbers from webpage.\n")
     input("Press enter to continue...\n") 
+
     url = input("Input webpage. For default, press enter: ")
     if len(url) < 1:
         url = "http://py4e-data.dr-chuck.net/comments_1632433.html"
+
     html = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(html, "html.parser")
     tags = soup("span")
     sum = 0
+
     for tag in tags:
         sum += int(tag.contents[0])
+
     print(sum)
 
 def x12_3():
     print("Input a webpage when prompted.\nDefault page:\nhttp://py4e-data.dr-chuck.net/known_by_Fikret.html\nFunction follows URL trail to retrieve name.\n")
     input("Press enter to continue...\n") 
+
     url = input("Input webpage. For default, press enter: ")
     num = int(input("Input number of cycles: "))
     pos = int(input("Input position: ")) - 1
     names = []
+
     if len(url) < 1:
         url = "http://py4e-data.dr-chuck.net/known_by_Abdullah.html"
+
     cycle(url, num, pos, names)
     print(names[num - 1])
 
@@ -362,11 +411,13 @@ def cycle(url, num, pos, names):
     html = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(html, "html.parser")
     tags = soup("a")
+
     if num > 0:
         url = (tags[pos].get("href", None))
         num -= 1
         names.append(tags[pos].contents[0])
         cycle(url, num, pos, names)
+
     return names
 
 def c13():
@@ -388,12 +439,12 @@ def x13_1():
     url = input("Location: ")
     if len(url) < 1:
         url = "http://py4e-data.dr-chuck.net/comments_42.xml"
-
     print('Retrieving', url)
-    uh = urllib.request.urlopen(url)
 
+    uh = urllib.request.urlopen(url)
     data = uh.read()
     print('Retrieved', len(data), 'characters')
+
     tree = ET.fromstring(data.decode())
     results = tree.findall(".//count")
     counts = []
@@ -411,7 +462,6 @@ def x13_2():
     url = input("Enter location: ")
     if len(url) < 1:
         url = "http://py4e-data.dr-chuck.net/comments_42.json"
-
     print("Retrieving", url)
 
     uh = urllib.request.urlopen(url)
@@ -426,6 +476,35 @@ def x13_2():
 
     print("Count:", len(counts))
     print("Sum:", sum(counts))
-    
+
+def x13_3():
+    print("Collect place id data from API\n")
+    input("Press enter to continue...")
+
+    api_key = 42
+    serviceurl = 'http://py4e-data.dr-chuck.net/json?'
+
+    # Ignore SSL certificate errors
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    while True:
+        address = input('Enter location: ')
+        if len(address) < 1: break
+        parms = dict()
+        parms['address'] = address
+
+        if api_key is not False: parms['key'] = api_key
+        url = serviceurl + urllib.parse.urlencode(parms)
+        print('Retrieving', url)
+
+        uh = urllib.request.urlopen(url, context=ctx)
+        data = uh.read().decode()
+        print('Retrieved', len(data), 'characters')
+
+        js = json.loads(data)
+        id = js["results"][0]["place_id"]
+        print("Place id", id)
 
 main()
