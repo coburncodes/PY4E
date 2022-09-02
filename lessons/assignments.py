@@ -2,8 +2,8 @@ import re
 import socket
 import urllib.request, urllib.error, urllib.parse
 from bs4 import BeautifulSoup
-import ssl
 import xml.etree.ElementTree as ET
+import json
 
 def main():
     number = input("Chapter Number: ")
@@ -403,5 +403,29 @@ def x13_1():
 
     print("Count:", len(results))
     print("Sum:", sum(counts))
+
+def x13_2():
+    print("Access JSON document and sum the inner text of all count tags.\n")
+    input("Press enter to continue...")
+
+    url = input("Enter location: ")
+    if len(url) < 1:
+        url = "http://py4e-data.dr-chuck.net/comments_42.json"
+
+    print("Retrieving", url)
+
+    uh = urllib.request.urlopen(url)
+    data = uh.read()
+    print("Retrieved", len(data), "characters")
+
+    info = json.loads(data)
+    counts = []
+
+    for entry in info["comments"]:
+        counts.append(int(entry["count"]))
+
+    print("Count:", len(counts))
+    print("Sum:", sum(counts))
+    
 
 main()
