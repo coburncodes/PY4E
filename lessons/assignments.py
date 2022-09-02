@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
 import json
 import ssl
+import sqlite3
 
 def main():
     number = input("Chapter Number: ")
@@ -32,6 +33,8 @@ def main():
         c12()
     elif number == "13":
         c13()
+    elif number == "15":
+        c15()
     else:
         print("No assignments of that number found.")
 
@@ -54,7 +57,7 @@ def x2_3():
     input("When prompted, input hours and rate to calculate pay.\nPress enter to continue...\n")
     hrs = input("Enter Hours: ")
     rate = input("Enter Rate: ")
-    
+
     try:
         fhrs = float(hrs)
         frate = float(rate)
@@ -506,5 +509,42 @@ def x13_3():
         js = json.loads(data)
         id = js["results"][0]["place_id"]
         print("Place id", id)
+
+def c15():
+    print("Chapter 15: Databases\n")   
+    x = input("Select an exercise: 15.1, 15.2, 15.3, or 15.4.\n")
+    if x == "15.1":
+        x15_1()
+    elif x == "15.2":
+        x15_2()
+    elif x == "15.3":
+        x15_3()
+    elif x == "15.4":
+        x15_4()
+    else:
+        print("Input either 15.1, 15.2, 15.3, or 15.4.")
+
+def x15_1():
+    print("Create and populate table, then fetch hex from first row.\n")
+    input("Press enter to continue...")
+
+    conn = sqlite3.connect("ages.sqlite")
+    cur = conn.cursor()
+
+    cur.execute("CREATE TABLE IF NOT EXISTS ages (name VARCHAR(128), age INTEGER)")
+    cur.execute("DELETE FROM ages")
+    cur.execute("INSERT INTO ages (name,age) VALUES('Lucia', 26);")
+    cur.execute("INSERT INTO ages (name,age) VALUES('Milos', 13)")
+    cur.execute("INSERT INTO ages (name,age) VALUES('Demmi', 34)")
+    cur.execute("INSERT INTO ages (name,age) VALUES('Mayra', 25)")
+    cur.execute("INSERT INTO ages (name,age) VALUES('Olufunke', 18)")
+    data = cur.execute("SELECT hex(name || age) AS X FROM ages ORDER BY X")
+
+    conn.commit()
+    print(data.fetchone())
+
+    cur.close()
+    
+
 
 main()
