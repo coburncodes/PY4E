@@ -1,7 +1,9 @@
 import re
 import socket
-import urllib.request
+import urllib.request, urllib.error, urllib.parse
 from bs4 import BeautifulSoup
+import ssl
+import xml.etree.ElementTree as ET
 
 def main():
     number = input("Chapter Number: ")
@@ -27,6 +29,8 @@ def main():
         c11()
     elif number == "12":
         c12()
+    elif number == "13":
+        c13()
     else:
         print("No assignments of that number found.")
 
@@ -365,6 +369,39 @@ def cycle(url, num, pos, names):
         cycle(url, num, pos, names)
     return names
 
+def c13():
+    print("Chapter 13: Using Web Services\n")
+    x = input("Select an exercise: 13.1, 13.2 or 13.3.\n")
+    if x == "13.1":
+        x13_1()
+    elif x == "13.2":
+        x13_2()
+    elif x == "13.3":
+        x13_3()
+    else:
+        print("Input either 13.1, 13.2 or 13.3.")
 
+def x13_1():
+    print("Access XML document and sum the inner text of all count tags.\n")
+    input("Press enter to continue...")
+
+    url = input("Location: ")
+    if len(url) < 1:
+        url = "http://py4e-data.dr-chuck.net/comments_42.xml"
+
+    print('Retrieving', url)
+    uh = urllib.request.urlopen(url)
+
+    data = uh.read()
+    print('Retrieved', len(data), 'characters')
+    tree = ET.fromstring(data.decode())
+    results = tree.findall(".//count")
+    counts = []
+
+    for entry in results:
+        counts.append(int(entry.text))
+
+    print("Count:", len(results))
+    print("Sum:", sum(counts))
 
 main()
