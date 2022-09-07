@@ -653,23 +653,25 @@ def x15_3():
         length = lookup(entry, 'Total Time')
         genre = lookup(entry, 'Genre')
 
-        if name is None or artist is None or album is None: 
+        if name is None or artist is None or album is None or genre is None: 
             continue
 
         cur.execute("INSERT OR IGNORE INTO Artist (name) VALUES ( ? )", (artist,))
         cur.execute("SELECT id FROM Artist WHERE name = ? ", (artist, ))
         artist_id = cur.fetchone()[0]
+        print("artist_id:", artist_id)
 
         cur.execute("INSERT OR IGNORE INTO Album (title, artist_id) VALUES ( ?, ? )", (album, artist_id))
         cur.execute("SELECT id FROM Album WHERE title = ? ", (album, ))
         album_id = cur.fetchone()[0]
+        print("album_id:", album_id)
 
         cur.execute("INSERT OR IGNORE INTO Genre (name) VALUES ( ? )", (genre,))
-        cur.execute("SELECT id FROM Genre WHERE title = ? ", (genre, ))
+        cur.execute("SELECT id FROM Genre WHERE name = ? ", (genre, ))
         genre_id = cur.fetchone()[0]
+        print("genre_id:", genre_id)
 
-        cur.execute("INSERT OR REPLACE INTO Track (title, album_id, len, rating, count) VALUES ( ?, ?, ?, ?, ? )", (name, album_id, length, rating, count))
-
+        cur.execute("INSERT OR REPLACE INTO Track (title, album_id, genre_id, len, rating, count) VALUES ( ?, ?, ?, ?, ?, ? )", (name, album_id, genre_id, length, rating, count))
 
         conn.commit()
 
